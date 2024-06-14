@@ -50,7 +50,16 @@ int main(int argc, char *argv[]){
   }
 
   #ifdef __linux__
-    open_flags |= O_EXCL;
+    struct stat file_stat;
+
+    if (fstat(file_descriptor, &file_stat) == -1) {
+      fprintf(stderr, "Unable to obtain file stat: %s\n", strerror(errno));
+      return 1;
+    }
+
+    if (S_ISBLK(file_stat.st_mode)) {
+      open_flags |= O_EXCL;
+    }
   #endif
 
   if ((file_descriptor = open(argv[1], open_flags)) == -1) {
@@ -95,13 +104,6 @@ int main(int argc, char *argv[]){
   }
 
   #ifdef __linux__
-    struct stat file_stat;
-
-    if (fstat(file_descriptor, &file_stat) == -1) {
-      fprintf(stderr, "Unable to obtain file stat: %s\n", strerror(errno));
-      return 1;
-    }
-
     if (S_ISBLK(file_stat.st_mode)) {
       if (ioctl(file_descriptor, BLKRRPART) == -1) {
         fprintf(stderr, "Warning: block device partition table re-read failed: %s\n", strerror(errno));
