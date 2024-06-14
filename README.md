@@ -16,7 +16,7 @@ limitations under the License.
 
 # Blankfast
 
-Blankfast is a tool that given a regular file or block device overwrites with zeros all 4K-blocks that contains non-zero values.
+Blankfast overwrites with zeros all 4K-blocks that contains non-zero values in a given regular file or block device.
 
 It could be used to quick nullify flash storage media, as it write speed is usually slower than read speed.
 
