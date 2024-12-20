@@ -20,5 +20,4 @@ blankfast::install() (
   sudo make install || fail
 )
 
-task::add --header "Blankfast" || softfail || return $?
-task::add blankfast::install || softfail || return $?
+task::add blankfast install || softfail || return $?
