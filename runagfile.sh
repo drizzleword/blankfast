@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 blankfast::install() (
-  shell::related_cd || fail
+  relative::cd . || fail
   make || fail
   sudo make install || fail
 )
